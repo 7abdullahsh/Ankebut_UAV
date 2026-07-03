@@ -68,8 +68,7 @@ Ankebut_UAV/
 │   └── config.py
 ├── models/                  # trained weights (bundled): pillowModel.pt, segmentationModel.pth
 ├── dataset/                 # training data — NOT in git; download from Releases (see below)
-├── tests/                   # standalone hardware / integration test scripts
-└── docs/                    # thesis, architecture diagrams, screenshots
+└── docs/                    # thesis (PDF)
 ```
 
 ---
