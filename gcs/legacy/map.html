@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ANKEBUT Map</title>
+    <link rel="stylesheet" href="leaflet/leaflet.css" />
+    <script src="leaflet/leaflet.js"></script>
+    <style>
+        body, html, #map {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: #1A2530;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .drone-icon {
+            text-align: center;
+            font-size: 28px;
+            line-height: 30px;
+        }
+ #drone-emoji {
+    display: inline-block;
+    transition: transform 0.2s;
+    color: #FF3030;          /* Kirmizi - uydu uzerinde belirgin */
+    text-shadow: 
+        0 0 3px white,
+        0 0 6px white;       /* Beyaz halo - kontrast icin */
+    font-weight: bold;
+        }
+        .info-banner {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(31, 51, 70, 0.85);
+            color: #8FA8C2;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            z-index: 1000;
+            border: 1px solid #3A5066;
+        }
+    </style>
+ 
+</head>
+<body>
+    <div id="map"></div>
+    <div class="info-banner" id="banner">Otomatik takip: AKTIF (haritayi suruklemek -> takibi durdur, cift tik -> tekrar baslat)</div>
+    <script>
+        // Baslangic: Istanbul (Taksim civari)
+        var START_LAT = 41.0370;
+        var START_LON = 28.9857;
+
+        var map = L.map('map', { zoomControl: true }).setView([START_LAT, START_LON], 15);
+
+        // ONEMLI: {s} subdomain pattern'i KULLANMA - QtWebEngine'de sorun cikariyor
+// CartoDB Dark Matter - koyu tema, QtWebEngine ile uyumlu
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    maxZoom: 19,
+    attribution: 'Esri, Maxar, Earthstar Geographics'
+}).addTo(map);
+
+        var droneIcon = L.divIcon({
+            className: 'drone-icon',
+            html: '<span id="drone-emoji">&#9992;</span>',
+            iconSize: [30, 30],
+            iconAnchor: [15, 15]
+        });
+
+        var droneMarker = L.marker([START_LAT, START_LON], { icon: droneIcon }).addTo(map);
+
+        var trailPoints = [];
+        var trailLine = L.polyline([], {
+            color: '#27AE60',
+            weight: 3,
+            opacity: 0.7
+        }).addTo(map);
+
+        var followDrone = true;
+
+        function updateDrone(lat, lon, heading) {
+            droneMarker.setLatLng([lat, lon]);
+
+            var emoji = document.getElementById('drone-emoji');
+            if (emoji) {
+                emoji.style.transform = 'rotate(' + heading + 'deg)';
+            }
+
+            trailPoints.push([lat, lon]);
+            if (trailPoints.length > 150) {
+                trailPoints.shift();
+            }
+            trailLine.setLatLngs(trailPoints);
+
+            if (followDrone) {
+                map.panTo([lat, lon], { animate: false });
+            }
+        }
+
+        function clearTrail() {
+            trailPoints = [];
+            trailLine.setLatLngs([]);
+        }
+
+        map.on('dragstart', function() {
+            followDrone = false;
+            document.getElementById('banner').innerHTML = 'Otomatik takip: KAPALI (cift tik -> tekrar baslat)';
+        });
+
+        map.on('dblclick', function() {
+            followDrone = true;
+            document.getElementById('banner').innerHTML = 'Otomatik takip: AKTIF';
+        });
+    </script>
+</body>
+</html>

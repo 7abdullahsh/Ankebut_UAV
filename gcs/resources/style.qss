@@ -1,0 +1,47 @@
+/* ANKEBUT GCS - Genel stil */
+QMainWindow {
+    background-color: #1A2530;
+}
+
+QSplitter::handle {
+    background-color: #3A5066;
+}
+
+QSplitter::handle:horizontal {
+    width: 2px;
+}
+
+QSplitter::handle:vertical {
+    height: 2px;
+}
+
+QStatusBar {
+    background-color: #1F3864;
+    color: white;
+    font-size: 12px;
+    border-top: 1px solid #2E4A7A;
+}
+
+QMessageBox {
+    background-color: #2B3D4F;
+    color: white;
+}
+
+QMessageBox QLabel {
+    color: white;
+    font-size: 13px;
+}
+
+QMessageBox QPushButton {
+    background-color: #34495E;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 16px;
+    min-width: 60px;
+    font-weight: bold;
+}
+
+QMessageBox QPushButton:hover {
+    background-color: #4A6278;
+}

@@ -1,0 +1,58 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+.python-version
+
+# ---- ML weights & training artifacts (large; use Git LFS or a Release) ----
+*.pt
+*.pth
+*.onnx
+*.engine
+*.trt
+*.weights
+runs/
+wandb/
+checkpoints/
+
+# ---- Datasets & large media (host externally, don't commit) ----
+datasets/
+data/
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.bag
+*.zip
+*.tar
+*.tar.gz
+
+# ---- Logs ----
+*.log
+logs/
+*.tlog
+*.bin
+
+# ---- OS ----
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---- IDE / editors ----
+.vscode/
+.idea/
+*.swp
+*~
+
+# ---- Secrets / local config ----
+.env
+*.key
+*.pem
+secrets.*
