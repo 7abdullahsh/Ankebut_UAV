@@ -66,7 +66,8 @@ Ankebut_UAV/
 │   ├── gcs_link.py
 │   ├── wind_service.py
 │   └── config.py
-├── models/                  # model weights (see "Model weights" below — not committed directly)
+├── models/                  # trained weights (bundled): pillowModel.pt, segmentationModel.pth
+├── dataset/                 # training data — NOT in git; download from Releases (see below)
 ├── tests/                   # standalone hardware / integration test scripts
 └── docs/                    # thesis, architecture diagrams, screenshots
 ```
@@ -98,12 +99,29 @@ Requires the flight controller on the serial link (e.g. `/dev/ttyTHS1`), the 5 G
 
 ---
 
-## Model weights
+## Model weights & dataset
 
-Model weights (`*.pt`, `*.pth`) are **not committed to git** (they are large and change often). Options:
+**Model weights** are included directly in this repository under `models/`:
 
-- Track them with **Git LFS**: `git lfs install && git lfs track "*.pt" "*.pth"`, or
-- Host them in a GitHub Release / cloud drive and download into `models/` before running.
+| File | Model | Purpose |
+|------|-------|---------|
+| `models/pillowModel.pt` | YOLOv11 | Fire / smoke (proxy) detection |
+| `models/segmentationModel.pth` | DeepLabV3 + MobileNetV3-Large | Land-cover segmentation |
+
+**Dataset** (~1.16 GB) is too large for the repository, so it is published as a release asset. Download it and unzip into `dataset/` in the project root:
+
+- Download: https://github.com/7abdullahsh/Ankebut_UAV/releases/download/v1.0/dataset.zip
+- SHA-256: `7630dacdefbc4085c894285230bfc307f5cc2ac42453c5ada332fa1808af6766`
+
+Optionally verify the download before extracting — the printed hash should match the value above:
+
+```bash
+# Windows (PowerShell)
+Get-FileHash dataset.zip -Algorithm SHA256
+
+# Linux / macOS
+sha256sum dataset.zip
+```
 
 ---
 
