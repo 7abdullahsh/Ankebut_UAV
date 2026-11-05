@@ -1,4 +1,4 @@
-# ANKEBUT — Autonomous Wildfire-Detection UAV
+# ANKEBUT - Autonomous Wildfire-Detection UAV
 
 ANKEBUT is an autonomous aerial monitoring system that scans forested areas, detects fire and smoke, and generates **wind-aware, geo-referenced fire-spread risk alerts** for a ground operator in real time.
 
